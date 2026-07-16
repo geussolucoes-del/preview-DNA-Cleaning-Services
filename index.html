@@ -515,7 +515,9 @@
       :root{--nav-h:68px}
       .nav-links,.nav>.btn{display:none}
       .menu-btn{display:block}
-      .brand img{width:132px}
+      .brand{min-width:0}
+      .brand img{height:clamp(42px,12vw,48px);width:auto;max-width:min(62vw,210px);object-fit:contain}
+      .nav.scrolled .brand img{height:clamp(36px,10vw,40px)}
       .hero{padding-top:calc(var(--nav-h) + 34px)}
       h1{font-size:clamp(3rem,17vw,4.5rem)}
       .hero-proof,.service-grid,.review-grid{grid-template-columns:1fr}
@@ -734,17 +736,17 @@
         <div class="review-grid">
           <article class="review">
             <div class="review-head"><div class="avatar">ML</div><div><strong>Marina L.</strong><span>Regular cleaning</span></div></div>
-            <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
+            <div class="stars">5.0 / 5</div>
             <p>"The house felt completely refreshed. The team was careful, organized and easy to communicate with."</p>
           </article>
           <article class="review">
             <div class="review-head"><div class="avatar">CR</div><div><strong>Camila R.</strong><span>Airbnb turnover</span></div></div>
-            <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
+            <div class="stars">5.0 / 5</div>
             <p>"They helped us get a rental ready quickly and paid attention to the details guests notice first."</p>
           </article>
           <article class="review">
             <div class="review-head"><div class="avatar">JS</div><div><strong>Jessica S.</strong><span>Move-out cleaning</span></div></div>
-            <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
+            <div class="stars">5.0 / 5</div>
             <p>"The move-out clean was smooth from quote to finish. Clear plan, clean result and no stress."</p>
           </article>
         </div>
