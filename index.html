@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -478,8 +478,8 @@
     .footer-links{display:grid;gap:8px;text-align:right;font-size:.9rem}
     .footer-links span{font-size:.66rem;letter-spacing:2px;text-transform:uppercase;color:#8aa0b8;font-weight:850}
     .footer-links a{color:#42556f;font-weight:650}
-    .legal{width:min(1120px,100%);margin:30px auto 0;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#8395aa;font-size:.86rem}
-    .legal a{color:#60748d;margin-left:16px}
+    .legal{width:min(1120px,100%);margin:30px auto 0;padding-top:20px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;color:#8395aa;font-size:.86rem}
+    .legal a{color:#60748d}.legal-design{text-align:center;font-size:.82rem;color:#8b9caf;white-space:nowrap}.legal-design a{font-weight:650;color:#60748d}.legal-policies{text-align:right}.legal-policies a{margin-left:16px}
     .cookie{
       position:fixed;
       left:18px;
@@ -534,7 +534,10 @@
       .why-grid{grid-template-columns:1fr}
       .stats-inner{grid-template-columns:1fr}
       .step{grid-template-columns:1fr}
-      .legal a{margin-left:0;margin-right:14px}
+      .legal{grid-template-columns:1fr;text-align:center;gap:8px}
+      .legal-design{white-space:normal}
+      .legal-policies{text-align:center}
+      .legal-policies a{margin:0 7px}
     }
     @media(prefers-reduced-motion:reduce){
       *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
@@ -731,17 +734,17 @@
         <div class="review-grid">
           <article class="review">
             <div class="review-head"><div class="avatar">ML</div><div><strong>Marina L.</strong><span>Regular cleaning</span></div></div>
-            <div class="stars">★★★★★</div>
+            <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
             <p>"The house felt completely refreshed. The team was careful, organized and easy to communicate with."</p>
           </article>
           <article class="review">
             <div class="review-head"><div class="avatar">CR</div><div><strong>Camila R.</strong><span>Airbnb turnover</span></div></div>
-            <div class="stars">★★★★★</div>
+            <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
             <p>"They helped us get a rental ready quickly and paid attention to the details guests notice first."</p>
           </article>
           <article class="review">
             <div class="review-head"><div class="avatar">JS</div><div><strong>Jessica S.</strong><span>Move-out cleaning</span></div></div>
-            <div class="stars">★★★★★</div>
+            <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
             <p>"The move-out clean was smooth from quote to finish. Clear plan, clean result and no stress."</p>
           </article>
         </div>
@@ -786,8 +789,9 @@
       </div>
     </div>
     <div class="legal">
-      <span>© 2026 DNA Cleaning Services. All rights reserved.</span>
-      <span>
+      <span>&copy; 2026 DNA Cleaning Services. All rights reserved.</span>
+      <span class="legal-design">Design by <a href="https://www.instagram.com/geusofc/" target="_blank" rel="noopener">Geus</a></span>
+      <span class="legal-policies">
         <a href="./privacy-policy.html">Privacy Policy</a>
         <a href="./cookie-policy.html">Cookie Policy</a>
       </span>
@@ -880,3 +884,5 @@
   </script>
 </body>
 </html>
+
+
