@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DNA Cleaning Services | Residential and Commercial Cleaning</title>
+  <meta name="description" content="DNA Cleaning Services provides detailed cleaning for homes, rentals, offices, move-in, move-out and post-construction spaces.">
+  <link rel="preload" as="image" href="./assets/dna-logo-transparent.png">
+  <style>
+    :root{
+      --blue:#1859b7;
+      --blue-deep:#0b3777;
+      --sky:#76d2e7;
+      --sky-soft:#e8f8fc;
+      --ink:#102033;
+      --muted:#64748b;
+      --line:#dce8f1;
+      --white:#fff;
+      --paper:#f7fbfe;
+      --mint:#b8eee6;
+      --nav-h:76px;
+      --ease:cubic-bezier(.22,.61,.36,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--ink);
+      background:var(--paper);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,select,textarea{font:inherit}
+    .nav{
+      position:fixed;
+      inset:0 0 auto;
+      height:var(--nav-h);
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      padding:0 clamp(20px,5vw,68px);
+      background:rgba(255,255,255,.9);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(24,89,183,.1);
+      transition:box-shadow .25s var(--ease), background .25s var(--ease);
+    }
+    .nav.scrolled{box-shadow:0 10px 30px rgba(16,32,51,.08);background:rgba(255,255,255,.96)}
+    .brand{display:flex;align-items:center;gap:12px;min-width:180px}
+    .brand img{width:152px;height:auto}
+    .nav-links{display:flex;align-items:center;gap:34px;list-style:none;margin:0;padding:0}
+    .nav-links a{
+      color:#3e5169;
+      font-size:.72rem;
+      font-weight:800;
+      letter-spacing:1.9px;
+      text-transform:uppercase;
+      position:relative;
+      padding:6px 0;
+    }
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:2px;
+      background:var(--sky);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .22s var(--ease);
+    }
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:0;
+      cursor:pointer;
+      min-height:46px;
+      padding:14px 24px;
+      border-radius:6px;
+      font-size:.76rem;
+      font-weight:900;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+      transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), color .22s var(--ease);
+      white-space:nowrap;
+    }
+    .btn-primary{background:var(--blue);color:white;box-shadow:0 16px 34px rgba(24,89,183,.22)}
+    .btn-primary:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:0 22px 42px rgba(24,89,183,.28)}
+    .btn-ghost{background:white;color:var(--blue);border:1px solid rgba(24,89,183,.22)}
+    .btn-ghost:hover{background:var(--sky-soft);transform:translateY(-2px)}
+    .menu-btn{display:none;width:44px;height:44px;border:0;background:transparent;position:relative}
+    .menu-btn span{display:block;width:24px;height:2px;background:var(--blue);margin:5px auto;transition:transform .2s var(--ease), opacity .2s var(--ease)}
+    .menu-btn.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .menu-btn.on span:nth-child(2){opacity:0}
+    .menu-btn.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .mobile-menu{
+      position:fixed;
+      inset:var(--nav-h) 0 auto;
+      z-index:45;
+      display:none;
+      padding:24px;
+      background:white;
+      border-bottom:1px solid var(--line);
+      box-shadow:0 22px 38px rgba(16,32,51,.08);
+    }
+    .mobile-menu.on{display:grid;gap:16px}
+    .mobile-menu a{font-weight:850;text-transform:uppercase;letter-spacing:1.8px;color:var(--blue)}
+    main{overflow:hidden}
+    .hero{
+      position:relative;
+      min-height:calc(100svh - 8px);
+      padding:calc(var(--nav-h) + 54px) clamp(20px,5vw,72px) 54px;
+      display:grid;
+      align-items:center;
+      background:
+        linear-gradient(115deg,rgba(247,251,254,.96) 0%,rgba(247,251,254,.93) 42%,rgba(232,248,252,.72) 100%),
+        url("https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1800&q=82");
+      background-size:cover;
+      background-position:center;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto -12vw -22vw auto;
+      width:48vw;
+      aspect-ratio:1;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(118,210,231,.34),rgba(118,210,231,0) 68%);
+      pointer-events:none;
+    }
+    .hero-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(0,1.02fr) minmax(340px,.78fr);
+      gap:clamp(34px,6vw,84px);
+      align-items:center;
+      width:min(1180px,100%);
+      margin:0 auto;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      color:var(--blue);
+      font-size:.72rem;
+      font-weight:900;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    .eyebrow::before{content:"";width:34px;height:2px;background:var(--sky)}
+    h1,h2,h3,p{margin-top:0}
+    h1{
+      max-width:780px;
+      margin-bottom:24px;
+      font-size:clamp(3.15rem,8vw,7.15rem);
+      line-height:.9;
+      letter-spacing:0;
+      color:var(--ink);
+    }
+    h1 span{display:block;color:var(--blue)}
+    .hero-copy{max-width:780px}
+    .hero-sub{
+      max-width:660px;
+      margin-bottom:28px;
+      color:#42556f;
+      font-size:clamp(1rem,1.6vw,1.2rem);
+    }
+    .hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+    .quick-contact{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      max-width:720px;
+    }
+    .quick-card{
+      min-height:92px;
+      padding:16px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(24,89,183,.12);
+      border-radius:8px;
+      box-shadow:0 18px 42px rgba(16,32,51,.06);
+    }
+    .quick-card strong{display:block;font-size:.72rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+    .quick-card span,.quick-card a{color:#43566e;font-size:.94rem;font-weight:700}
+    .hero-panel{
+      align-self:stretch;
+      min-height:560px;
+      display:grid;
+      align-content:end;
+      border-radius:8px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg,rgba(11,55,119,0) 28%,rgba(11,55,119,.88) 100%),
+        url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1000&q=82");
+      background-size:cover;
+      background-position:center;
+      box-shadow:0 28px 70px rgba(16,32,51,.22);
+      position:relative;
+    }
+    .hero-panel::before{
+      content:"";
+      position:absolute;
+      inset:28px 28px auto auto;
+      width:116px;
+      height:116px;
+      border:18px solid rgba(118,210,231,.9);
+      border-left-color:transparent;
+      border-bottom-color:transparent;
+      border-radius:50%;
+    }
+    .panel-content{position:relative;padding:30px;color:white}
+    .panel-kicker{font-size:.72rem;letter-spacing:2.4px;text-transform:uppercase;color:var(--mint);font-weight:900;margin-bottom:10px}
+    .panel-title{font-size:1.85rem;line-height:1.05;margin-bottom:10px}
+    .panel-text{color:rgba(255,255,255,.78);margin:0}
+    .strip{
+      display:flex;
+      gap:0;
+      overflow:hidden;
+      background:var(--blue);
+      color:white;
+      border-block:1px solid rgba(255,255,255,.08);
+    }
+    .strip-track{
+      display:flex;
+      min-width:200%;
+      animation:marquee 28s linear infinite;
+    }
+    .strip-item{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      padding:14px 28px;
+      font-size:.75rem;
+      letter-spacing:2.2px;
+      text-transform:uppercase;
+      font-weight:850;
+      white-space:nowrap;
+      color:rgba(255,255,255,.82);
+    }
+    .strip-item::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sky)}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    .section{
+      padding:clamp(72px,10vw,120px) clamp(20px,5vw,72px);
+    }
+    .section-inner{width:min(1120px,100%);margin:0 auto}
+    .section-head{display:grid;grid-template-columns:minmax(0,.8fr) minmax(300px,.62fr);gap:34px;align-items:end;margin-bottom:34px}
+    .section-title{font-size:clamp(2.25rem,5vw,4.6rem);line-height:.98;letter-spacing:0;margin-bottom:0}
+    .section-title span{color:var(--blue)}
+    .section-copy{color:var(--muted);font-size:1.02rem;margin-bottom:0}
+    .services{background:white}
+    .service-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .service-card{
+      min-height:220px;
+      padding:24px 18px;
+      background:linear-gradient(180deg,#fff,#f6fbfe);
+      border:1px solid var(--line);
+      border-radius:8px;
+      transition:transform .24s var(--ease), box-shadow .24s var(--ease), border-color .24s var(--ease);
+    }
+    .service-card:hover{transform:translateY(-5px);border-color:rgba(24,89,183,.22);box-shadow:0 22px 42px rgba(16,32,51,.08)}
+    .service-num{font-size:.72rem;letter-spacing:2px;color:var(--sky);font-weight:950;margin-bottom:44px}
+    .service-card h3{font-size:1.08rem;line-height:1.1;margin-bottom:12px;color:var(--blue-deep)}
+    .service-card p{font-size:.92rem;color:#5d7189;margin-bottom:0}
+    .process{background:linear-gradient(180deg,var(--paper),#eef9fd)}
+    .process-layout{display:grid;grid-template-columns:minmax(320px,.75fr) minmax(0,1fr);gap:42px;align-items:center}
+    .process-card{
+      background:var(--blue-deep);
+      color:white;
+      padding:34px;
+      border-radius:8px;
+      box-shadow:0 24px 60px rgba(11,55,119,.22);
+    }
+    .process-card img{width:190px;margin-bottom:24px;filter:drop-shadow(0 18px 24px rgba(0,0,0,.16))}
+    .process-card p{color:rgba(255,255,255,.74);margin-bottom:24px}
+    .steps{display:grid;gap:14px}
+    .step{
+      display:grid;
+      grid-template-columns:64px 1fr;
+      gap:18px;
+      align-items:start;
+      padding:24px;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:8px;
+    }
+    .step-num{
+      display:grid;
+      place-items:center;
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      background:var(--sky-soft);
+      color:var(--blue);
+      font-weight:950;
+    }
+    .step h3{margin-bottom:8px}
+    .step p{margin-bottom:0;color:var(--muted)}
+    .why{background:var(--blue-deep);color:white;position:relative}
+    .why .section-copy{color:rgba(255,255,255,.68)}
+    .why .eyebrow{color:var(--sky)}
+    .why-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .why-item{
+      padding:26px;
+      min-height:210px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:8px;
+      background:rgba(255,255,255,.055);
+    }
+    .why-item strong{display:block;font-size:1.05rem;line-height:1.18;margin-bottom:14px}
+    .why-item span{color:rgba(255,255,255,.68);font-size:.95rem}
+    .reviews{background:white}
+    .review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .review{
+      padding:26px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      box-shadow:0 18px 36px rgba(16,32,51,.05);
+    }
+    .stars{color:var(--blue);letter-spacing:3px;font-size:.82rem;margin-bottom:18px}
+    .review p{color:#41536b}
+    .review strong{display:block;color:var(--ink)}
+    .review span{display:block;color:var(--muted);font-size:.9rem}
+    .areas{
+      background:
+        linear-gradient(90deg,rgba(247,251,254,.96),rgba(247,251,254,.85)),
+        url("https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1500&q=80");
+      background-size:cover;
+      background-position:center;
+    }
+    .area-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+    .area-pill{
+      padding:10px 15px;
+      border-radius:999px;
+      background:white;
+      border:1px solid rgba(24,89,183,.14);
+      color:var(--blue-deep);
+      font-weight:850;
+      font-size:.85rem;
+    }
+    .cta{
+      background:linear-gradient(135deg,var(--blue) 0%,var(--blue-deep) 100%);
+      color:white;
+      text-align:center;
+      padding:92px clamp(20px,5vw,72px);
+    }
+    .cta h2{font-size:clamp(2.35rem,6vw,5rem);line-height:.98;margin-bottom:18px}
+    .cta p{max-width:700px;margin:0 auto 28px;color:rgba(255,255,255,.76)}
+    .cta .btn-primary{background:white;color:var(--blue);box-shadow:0 16px 36px rgba(0,0,0,.16)}
+    .cta .btn-primary:hover{background:var(--sky-soft);color:var(--blue-deep)}
+    footer{
+      background:#071e42;
+      color:white;
+      padding:46px clamp(20px,5vw,72px) 28px;
+    }
+    .footer-inner{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:34px;align-items:start}
+    .footer-logo{width:182px;background:white;border-radius:7px;padding:10px;margin-bottom:18px}
+    .footer-copy{color:rgba(255,255,255,.65);max-width:470px}
+    .footer-links{display:grid;gap:10px;text-align:right}
+    .footer-links a{color:rgba(255,255,255,.78);font-weight:750}
+    .legal{width:min(1120px,100%);margin:30px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:rgba(255,255,255,.48);font-size:.86rem}
+    .legal a{color:rgba(255,255,255,.62);margin-left:16px}
+    .cookie{
+      position:fixed;
+      left:18px;
+      right:18px;
+      bottom:18px;
+      z-index:70;
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      max-width:980px;
+      margin:0 auto;
+      padding:16px 18px;
+      background:rgba(255,255,255,.96);
+      border:1px solid rgba(24,89,183,.16);
+      border-radius:8px;
+      box-shadow:0 20px 60px rgba(16,32,51,.18);
+      backdrop-filter:blur(16px);
+    }
+    .cookie.show{display:flex}
+    .cookie p{margin:0;color:#4f6178;font-size:.9rem}
+    .cookie a{color:var(--blue);font-weight:850}
+    .cookie-actions{display:flex;gap:10px;flex-shrink:0}
+    .cookie .btn{min-height:40px;padding:10px 16px;font-size:.68rem;border-radius:5px}
+    @media(max-width:1080px){
+      .hero-grid,.process-layout,.section-head{grid-template-columns:1fr}
+      .hero-panel{min-height:430px}
+      .service-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:820px){
+      :root{--nav-h:68px}
+      .nav-links,.nav>.btn{display:none}
+      .menu-btn{display:block}
+      .brand img{width:132px}
+      .hero{padding-top:calc(var(--nav-h) + 34px)}
+      h1{font-size:clamp(3rem,17vw,4.5rem)}
+      .quick-contact,.service-grid,.review-grid{grid-template-columns:1fr}
+      .hero-panel{min-height:360px}
+      .service-card{min-height:auto}
+      .service-num{margin-bottom:22px}
+      .footer-inner{grid-template-columns:1fr}
+      .footer-links{text-align:left}
+      .cookie{display:none;align-items:stretch;flex-direction:column}
+      .cookie.show{display:flex}
+      .cookie-actions{justify-content:flex-end;flex-wrap:wrap}
+    }
+    @media(max-width:560px){
+      .hero-actions{align-items:stretch}
+      .hero-actions .btn{width:100%}
+      .why-grid{grid-template-columns:1fr}
+      .step{grid-template-columns:1fr}
+      .legal a{margin-left:0;margin-right:14px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <a href="#home" class="brand" aria-label="DNA Cleaning Services home">
+      <img src="./assets/dna-logo-transparent.png" alt="DNA Cleaning Services">
+    </a>
+    <ul class="nav-links" aria-label="Primary navigation">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">How It Works</a></li>
+      <li><a href="#why">Why DNA</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+    </ul>
+    <a class="btn btn-primary" href="./quote.html">Book Now</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a>
+    <a href="#process">How It Works</a>
+    <a href="#why">Why DNA</a>
+    <a href="#reviews">Reviews</a>
+    <a href="./quote.html">Book Now</a>
+  </div>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">DNA Cleaning Services</div>
+          <h1>Clean spaces. <span>Clear plans.</span></h1>
+          <p class="hero-sub">Detailed cleaning for homes, rentals, offices and move-ready spaces, with a simple booking experience and a team that treats every room with care.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="./quote.html">Request a Free Quote</a>
+            <a class="btn btn-ghost" href="tel:+14255999562">Call or Text</a>
+          </div>
+          <div class="quick-contact" aria-label="Quick service highlights">
+            <div class="quick-card">
+              <strong>Call or Text</strong>
+              <a href="tel:+14255999562">(425) 599-9562</a>
+            </div>
+            <div class="quick-card">
+              <strong>Owner Contact</strong>
+              <span>Rafaela Aguirre</span>
+            </div>
+            <div class="quick-card">
+              <strong>Flexible Service</strong>
+              <span>Homes, rentals and offices</span>
+            </div>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Bright clean kitchen">
+          <div class="panel-content">
+            <div class="panel-kicker">Book with confidence</div>
+            <h2 class="panel-title">A brighter space starts with a focused cleaning plan.</h2>
+            <p class="panel-text">Choose the service, share the details and receive a personalized quote for your space.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <div class="strip" aria-hidden="true">
+      <div class="strip-track">
+        <div class="strip-item">Deep Cleaning</div>
+        <div class="strip-item">Regular House Cleaning</div>
+        <div class="strip-item">Move-In and Move-Out</div>
+        <div class="strip-item">Post-Construction</div>
+        <div class="strip-item">Airbnb and Office</div>
+        <div class="strip-item">Deep Cleaning</div>
+        <div class="strip-item">Regular House Cleaning</div>
+        <div class="strip-item">Move-In and Move-Out</div>
+        <div class="strip-item">Post-Construction</div>
+        <div class="strip-item">Airbnb and Office</div>
+      </div>
+    </div>
+    <section class="section services" id="services">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Our Services</div>
+            <h2 class="section-title">Cleaning built around <span>your space.</span></h2>
+          </div>
+          <p class="section-copy">From routine upkeep to heavy-detail projects, DNA keeps the scope clear so you know exactly what to expect before the first visit.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="service-num">01</div>
+            <h3>Deep Cleaning</h3>
+            <p>Detailed reset cleaning for kitchens, bathrooms, surfaces, fixtures and hard-to-reach areas.</p>
+          </article>
+          <article class="service-card">
+            <div class="service-num">02</div>
+            <h3>Regular House Cleaning</h3>
+            <p>Weekly, bi-weekly or monthly service to keep your home consistently fresh.</p>
+          </article>
+          <article class="service-card">
+            <div class="service-num">03</div>
+            <h3>Move-In and Move-Out</h3>
+            <p>Turnover-ready cleaning for empty homes, apartments and transition spaces.</p>
+          </article>
+          <article class="service-card">
+            <div class="service-num">04</div>
+            <h3>Post-Construction</h3>
+            <p>Dust, detail and finish cleaning after remodeling, repairs or new projects.</p>
+          </article>
+          <article class="service-card">
+            <div class="service-num">05</div>
+            <h3>Airbnb and Office</h3>
+            <p>Reliable cleaning for hosted stays, small offices and spaces that need to be guest-ready.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section process" id="process">
+      <div class="section-inner process-layout">
+        <div class="process-card">
+          <img src="./assets/dna-logo-transparent.png" alt="DNA Cleaning Services">
+          <h2 class="section-title">Simple from the first message.</h2>
+          <p>Share your space, service type and timing. DNA follows up with a custom plan so the visit feels organized before anyone arrives.</p>
+          <a class="btn btn-primary" href="./quote.html">Start a Quote</a>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h3>Tell us what you need</h3>
+              <p>Choose the service, add your contact details and describe the space.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h3>Get a personalized plan</h3>
+              <p>DNA reviews the details and confirms the best cleaning option for your request.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h3>Enjoy the clean result</h3>
+              <p>The team arrives prepared, works carefully and leaves the space refreshed.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section why" id="why">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Why DNA</div>
+            <h2 class="section-title">A standard you can see in the details.</h2>
+          </div>
+          <p class="section-copy">The DNA approach is organized, responsive and practical: clear communication, careful service and a polished finish.</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-item"><strong>Clear communication</strong><span>Easy quote requests, direct contact and no complicated booking process.</span></div>
+          <div class="why-item"><strong>Detail-focused service</strong><span>Bathrooms, kitchens, surfaces and finishing touches get careful attention.</span></div>
+          <div class="why-item"><strong>Flexible cleaning plans</strong><span>One-time, regular, move-ready and business cleaning needs can be scoped clearly.</span></div>
+          <div class="why-item"><strong>Trustworthy presentation</strong><span>A professional experience that helps homes, offices and rentals feel guest-ready.</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="section reviews" id="reviews">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Client Notes</div>
+            <h2 class="section-title">Fresh, polished and ready.</h2>
+          </div>
+          <p class="section-copy">A first draft of review language for the site. These can be replaced by real testimonials whenever the client sends them.</p>
+        </div>
+        <div class="review-grid">
+          <article class="review">
+            <div class="stars">★★★★★</div>
+            <p>"The house felt completely refreshed. The team was careful, organized and easy to communicate with."</p>
+            <strong>Residential Client</strong>
+            <span>Regular cleaning</span>
+          </article>
+          <article class="review">
+            <div class="stars">★★★★★</div>
+            <p>"They helped us get a rental ready quickly and paid attention to the details guests notice first."</p>
+            <strong>Rental Host</strong>
+            <span>Airbnb cleaning</span>
+          </article>
+          <article class="review">
+            <div class="stars">★★★★★</div>
+            <p>"The move-out clean was smooth from quote to finish. Clear plan, clean result and no stress."</p>
+            <strong>Moving Client</strong>
+            <span>Move-out cleaning</span>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section areas">
+      <div class="section-inner">
+        <div class="eyebrow">Service Area</div>
+        <h2 class="section-title">Local cleaning for homes, offices and rentals.</h2>
+        <p class="section-copy">Service coverage can be updated once the exact cities are confirmed. For now, the site keeps the language flexible and ready for the final area list.</p>
+        <div class="area-list" aria-label="Service categories">
+          <span class="area-pill">Homes</span>
+          <span class="area-pill">Apartments</span>
+          <span class="area-pill">Offices</span>
+          <span class="area-pill">Airbnb Stays</span>
+          <span class="area-pill">Move-In</span>
+          <span class="area-pill">Move-Out</span>
+          <span class="area-pill">Post-Construction</span>
+        </div>
+      </div>
+    </section>
+    <section class="cta">
+      <h2>Ready to book your cleaning?</h2>
+      <p>Send the details of your space and DNA Cleaning Services will prepare a clear quote for the service you need.</p>
+      <div class="hero-actions" style="justify-content:center;margin-bottom:0">
+        <a class="btn btn-primary" href="./quote.html">Request a Free Quote</a>
+        <a class="btn btn-ghost" href="tel:+14255999562">Call (425) 599-9562</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><img src="./assets/dna-logo-transparent.png" alt="DNA Cleaning Services"></div>
+        <p class="footer-copy">Detailed cleaning services for homes, rentals, offices, move-in, move-out and post-construction spaces.</p>
+      </div>
+      <div class="footer-links">
+        <a href="tel:+14255999562">(425) 599-9562</a>
+        <a href="https://www.instagram.com/dna_cleaning_services_/" target="_blank" rel="noopener">@dna_cleaning_services_</a>
+        <a href="./quote.html">Request a Quote</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 DNA Cleaning Services. All rights reserved.</span>
+      <span>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./cookie-policy.html">Cookie Policy</a>
+      </span>
+    </div>
+  </footer>
+  <div class="cookie" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie notice">
+    <p>We use cookies to improve your experience and understand site activity. Read our <a href="./privacy-policy.html">Privacy Policy</a> and <a href="./cookie-policy.html">Cookie Policy</a>.</p>
+    <div class="cookie-actions">
+      <button class="btn btn-ghost" type="button" data-cookie="declined">Decline</button>
+      <button class="btn btn-primary" type="button" data-cookie="accepted">Accept</button>
+    </div>
+  </div>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    const nav = document.getElementById('nav');
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const cookieBanner = document.getElementById('cookieBanner');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    menuBtn.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('on');
+      menuBtn.classList.toggle('on', open);
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('on');
+        menuBtn.classList.remove('on');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    window.addEventListener('load', () => {
+      if (!localStorage.getItem('dna_cookie_consent')) {
+        window.setTimeout(() => cookieBanner.classList.add('show'), 900);
+      }
+    });
+
+    document.querySelectorAll('[data-cookie]').forEach((button) => {
+      button.addEventListener('click', () => {
+        localStorage.setItem('dna_cookie_consent', button.dataset.cookie);
+        cookieBanner.classList.remove('show');
+      });
+    });
+  </script>
+</body>
+</html>
