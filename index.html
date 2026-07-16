@@ -368,6 +368,40 @@
     .service-card p{font-size:.92rem;color:#5d7189;margin-bottom:0}
     .service-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
     .service-tags span{font-size:.64rem;letter-spacing:1px;text-transform:uppercase;font-weight:800;color:var(--blue);background:var(--sky-soft);padding:6px 8px;border-radius:999px}
+    .addon-panel{
+      margin-top:18px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(180deg,#fff,#f8fcff);
+      box-shadow:0 18px 36px rgba(16,32,51,.045);
+    }
+    .addon-panel h3{
+      font-family:"Sora", ui-sans-serif, system-ui, sans-serif;
+      font-size:clamp(1.35rem,2.4vw,2rem);
+      line-height:1.08;
+      letter-spacing:-.035em;
+      margin-bottom:10px;
+      color:var(--blue-deep);
+    }
+    .addon-panel p{max-width:760px;color:#5d7189;margin-bottom:22px}
+    .addon-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+    .addon-list li{
+      padding:10px 15px;
+      border-radius:999px;
+      background:var(--sky-soft);
+      border:1px solid rgba(24,89,183,.12);
+      color:var(--blue-deep);
+      font-weight:800;
+      font-size:.84rem;
+    }
     .process{background:linear-gradient(180deg,var(--paper),#f3fbfe)}
     .process-layout{display:grid;grid-template-columns:minmax(320px,.75fr) minmax(0,1fr);gap:42px;align-items:center}
     .process-card{
@@ -455,6 +489,7 @@
       background-position:center;
     }
     .area-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+    .area-list{padding:0;list-style:none}
     .area-pill{
       padding:10px 15px;
       border-radius:999px;
@@ -464,6 +499,7 @@
       font-weight:850;
       font-size:.85rem;
     }
+    .area-note{margin:22px 0 0;color:#4d6179;font-weight:650}
     .cta{
       background:var(--grad);
       color:white;
@@ -543,6 +579,7 @@
       .hero-actions .btn{width:100%}
       .why-grid{grid-template-columns:1fr}
       .stats-inner{grid-template-columns:1fr}
+      .addon-panel{padding:24px 18px}
       .step{grid-template-columns:1fr}
       .legal{grid-template-columns:1fr;text-align:center;gap:8px}
       .legal-design{white-space:normal}
@@ -675,6 +712,27 @@
             <div class="service-tags"><span>Guest-ready</span><span>Business</span></div>
           </article>
         </div>
+        <div class="addon-panel">
+          <div class="eyebrow">Additional Services</div>
+          <h3>Detail add-ons for a more complete clean.</h3>
+          <p>Customize your South Florida cleaning plan with focused add-on services for appliances, windows, finishing details and outdoor living areas.</p>
+          <ul class="addon-list" aria-label="Additional cleaning services">
+            <li>Inside Oven Cleaning</li>
+            <li>Inside Refrigerator Cleaning</li>
+            <li>Inside Cabinets &amp; Drawers</li>
+            <li>Interior Windows</li>
+            <li>Glass Doors (Inside &amp; Outside)</li>
+            <li>Window Tracks</li>
+            <li>Blinds Cleaning</li>
+            <li>Baseboards (Detailed Cleaning)</li>
+            <li>Doors &amp; Door Frames</li>
+            <li>Light Switches &amp; Outlet Covers</li>
+            <li>Ceiling Fans</li>
+            <li>Patio / Lanai Cleaning</li>
+            <li>Garage Sweeping</li>
+            <li>Bed Linen Change</li>
+          </ul>
+        </div>
       </div>
     </section>
     <section class="section process" id="process">
@@ -763,17 +821,22 @@
     <section class="section areas">
       <div class="section-inner">
         <div class="eyebrow">Service Area</div>
-        <h2 class="section-title">Local cleaning for homes, offices and rentals.</h2>
-        <p class="section-copy">Service coverage can be updated once the exact cities are confirmed. For now, the site keeps the language flexible and ready for the final area list.</p>
-        <div class="area-list" aria-label="Service categories">
-          <span class="area-pill">Homes</span>
-          <span class="area-pill">Apartments</span>
-          <span class="area-pill">Offices</span>
-          <span class="area-pill">Airbnb Stays</span>
-          <span class="area-pill">Move-In</span>
-          <span class="area-pill">Move-Out</span>
-          <span class="area-pill">Post-Construction</span>
-        </div>
+        <h2 class="section-title">South Florida cleaning for homes, offices and rentals.</h2>
+        <p class="section-copy">DNA Cleaning Services helps homeowners, rental hosts and small businesses across Palm Beach and Broward County keep their spaces clean, polished and ready.</p>
+        <ul class="area-list" aria-label="Cities served in South Florida">
+          <li class="area-pill">Boynton Beach</li>
+          <li class="area-pill">Delray Beach</li>
+          <li class="area-pill">Boca Raton</li>
+          <li class="area-pill">Deerfield Beach</li>
+          <li class="area-pill">Pompano Beach</li>
+          <li class="area-pill">Lighthouse Point</li>
+          <li class="area-pill">Coconut Creek</li>
+          <li class="area-pill">Parkland</li>
+          <li class="area-pill">Margate</li>
+          <li class="area-pill">Lake Worth</li>
+          <li class="area-pill">West Palm Beach</li>
+        </ul>
+        <p class="area-note">Don't see your city listed? Contact us! We may also serve nearby areas.</p>
       </div>
     </section>
     <section class="cta">
