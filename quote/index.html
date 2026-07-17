@@ -19,8 +19,11 @@
 window.dataLayer = window.dataLayer || [];
 window.dnaCookieConsent = localStorage.getItem("dnaCookieConsent") || "";
 window.dnaPushEvent = window.dnaPushEvent || function(eventName, payload){
-  if(eventName !== "cookie_consent_update" && window.dnaCookieConsent !== "analytics") return;
-  window.dataLayer.push(Object.assign({ event: eventName, site_name: "DNA Cleaning Services" }, payload || {}));
+  window.dataLayer.push(Object.assign({
+    event: eventName,
+    site_name: "DNA Cleaning Services",
+    cookie_consent: window.dnaCookieConsent || "unset"
+  }, payload || {}));
 };
 </script>
 
@@ -431,7 +434,7 @@ document.querySelectorAll("[data-cookie-choice]").forEach(btn=>btn.addEventListe
   window.dnaCookieConsent=btn.dataset.cookieChoice;
   localStorage.setItem("dnaCookieConsent",window.dnaCookieConsent);
   cookieBanner.classList.remove("show");
-  window.dataLayer.push({event:"cookie_consent_update",site_name:"DNA Cleaning Services",choice:window.dnaCookieConsent});
+  window.dnaPushEvent && window.dnaPushEvent("cookie_consent_update", { choice: window.dnaCookieConsent });
 }));
 
 /* fire on load: user opened the quote form */
@@ -535,8 +538,19 @@ form.addEventListener("submit", e=>{
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
   data.addons = formData.getAll("addons").join(", ");
+  data.page_path = location.pathname;
+  data.submitted_at = new Date().toISOString();
   const finish = ()=>{
-    window.dnaPushEvent && window.dnaPushEvent("form_submit", { service: data.service||"", addons: data.addons || "", page_path: location.pathname });
+    window.dnaPushEvent && window.dnaPushEvent("form_submit", {
+      service: data.service || "",
+      addons: data.addons || "",
+      frequency: data.frequency || "",
+      bedrooms: data.bedrooms || "",
+      bathrooms: data.bathrooms || "",
+      floors: data.floors || "",
+      pets: data.pets || "",
+      page_path: data.page_path
+    });
     form.style.display = "none";
     document.querySelector(".q-progress").style.display="none";
     document.querySelector(".q-progress-lbl").style.display="none";
