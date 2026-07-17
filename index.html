@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -864,16 +864,16 @@
       <span>&copy; 2026 DNA Cleaning Services. All rights reserved.</span>
       <span class="legal-design">Design by <a href="https://www.instagram.com/geusofc/" target="_blank" rel="noopener">Geus</a></span>
       <span class="legal-policies">
-        <a href="./privacy-policy.html">Privacy Policy</a>
-        <a href="./cookie-policy.html">Cookie Policy</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
       </span>
     </div>
   </footer>
   <div class="cookie" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie notice">
-    <p>We use cookies to improve your experience and understand site activity. Read our <a href="./privacy-policy.html">Privacy Policy</a> and <a href="./cookie-policy.html">Cookie Policy</a>.</p>
+    <p>We use cookies to improve your experience and understand site activity. Read our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/cookie-policy.html">Cookie Policy</a>.</p>
     <div class="cookie-actions">
-      <button class="btn btn-ghost" type="button" data-cookie="declined">Decline</button>
-      <button class="btn btn-primary" type="button" data-cookie="accepted">Accept</button>
+      <button class="btn btn-ghost" type="button" data-cookie="necessary">Necessary only</button>
+      <button class="btn btn-primary" type="button" data-cookie="analytics">Accept analytics</button>
     </div>
   </div>
   <script>
@@ -941,16 +941,20 @@
       }
     });
 
+    const getCookieConsent = () => localStorage.getItem('dnaCookieConsent') || localStorage.getItem('dna_cookie_consent') || '';
+
     window.addEventListener('load', () => {
-      if (!localStorage.getItem('dna_cookie_consent')) {
+      if (!getCookieConsent()) {
         window.setTimeout(() => cookieBanner.classList.add('show'), 900);
       }
     });
 
     document.querySelectorAll('[data-cookie]').forEach((button) => {
       button.addEventListener('click', () => {
+        localStorage.setItem('dnaCookieConsent', button.dataset.cookie);
         localStorage.setItem('dna_cookie_consent', button.dataset.cookie);
         cookieBanner.classList.remove('show');
+        window.dataLayer.push({event:'cookie_consent_update',site_name:'DNA Cleaning Services',choice:button.dataset.cookie});
       });
     });
   </script>
