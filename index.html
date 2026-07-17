@@ -476,7 +476,8 @@
     }
     .review::before{content:"";position:absolute;top:18px;right:22px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--sky-soft),#fff)}
     .review-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;position:relative;z-index:1}
-    .avatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--sky));color:white;font-weight:900;border:3px solid #fff;box-shadow:0 10px 24px rgba(24,89,183,.2)}
+    .avatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--sky));color:white;font-weight:900;border:3px solid #fff;box-shadow:0 10px 24px rgba(24,89,183,.2);overflow:hidden;flex:0 0 auto}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
     .stars{color:var(--blue);letter-spacing:3px;font-size:.82rem;margin-bottom:18px}
     .review p{color:#41536b;font-weight:300;line-height:1.72}
     .review strong{display:block;color:var(--ink)}
@@ -797,21 +798,21 @@
             <div class="eyebrow">Reviews</div>
             <h2 class="section-title">Fresh, polished and ready.</h2>
           </div>
-          <p class="section-copy">Warm, name-based testimonial placeholders for the first preview. We can replace these with real reviews or AI-generated faces when you send them.</p>
+          <p class="section-copy">A cleaner space should feel simple from the first message to the final walkthrough.</p>
         </div>
         <div class="review-grid">
           <article class="review">
-            <div class="review-head"><div class="avatar">ML</div><div><strong>Marina L.</strong><span>Regular cleaning</span></div></div>
+            <div class="review-head"><div class="avatar"><img src="./assets/review-marina-l.jpg" alt="Marina L."></div><div><strong>Marina L.</strong><span>Regular cleaning</span></div></div>
             <div class="stars">5.0</div>
             <p>"The house felt completely refreshed. The team was careful, organized and easy to communicate with."</p>
           </article>
           <article class="review">
-            <div class="review-head"><div class="avatar">CR</div><div><strong>Camila R.</strong><span>Airbnb turnover</span></div></div>
+            <div class="review-head"><div class="avatar"><img src="./assets/review-camila-r.jpg" alt="Camila R."></div><div><strong>Camila R.</strong><span>Airbnb turnover</span></div></div>
             <div class="stars">5.0</div>
             <p>"They helped us get a rental ready quickly and paid attention to the details guests notice first."</p>
           </article>
           <article class="review">
-            <div class="review-head"><div class="avatar">JS</div><div><strong>Jessica S.</strong><span>Move-out cleaning</span></div></div>
+            <div class="review-head"><div class="avatar"><img src="./assets/review-jessica-s.jpg" alt="Jessica S."></div><div><strong>Jessica S.</strong><span>Move-out cleaning</span></div></div>
             <div class="stars">5.0</div>
             <p>"The move-out clean was smooth from quote to finish. Clear plan, clean result and no stress."</p>
           </article>
@@ -960,5 +961,3 @@
   </script>
 </body>
 </html>
-
-
