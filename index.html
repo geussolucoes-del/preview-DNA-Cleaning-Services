@@ -858,7 +858,7 @@
         <span>Contact</span>
         <a href="tel:+14255999562">(425) 599-9562</a>
         <a href="https://www.instagram.com/dna_cleaning_services_/" target="_blank" rel="noopener">@dna_cleaning_services_</a>
-        <a href="./quote">Request a Free Quote</a>
+        <a href="mailto:dnacleaning23@gmail.com">dnacleaning23@gmail.com</a>
       </div>
     </div>
     <div class="legal">
@@ -942,7 +942,16 @@
       }
     });
 
-    const getCookieConsent = () => localStorage.getItem('dnaCookieConsent') || localStorage.getItem('dna_cookie_consent') || '';
+    const getCookieConsent = () => {
+      try { return localStorage.getItem('dnaCookieConsent') || localStorage.getItem('dna_cookie_consent') || ''; }
+      catch(e) { return ''; }
+    };
+    const setCookieConsent = (value) => {
+      try {
+        localStorage.setItem('dnaCookieConsent', value);
+        localStorage.setItem('dna_cookie_consent', value);
+      } catch(e) {}
+    };
 
     window.addEventListener('load', () => {
       if (!getCookieConsent()) {
@@ -952,9 +961,9 @@
 
     document.querySelectorAll('[data-cookie]').forEach((button) => {
       button.addEventListener('click', () => {
-        localStorage.setItem('dnaCookieConsent', button.dataset.cookie);
-        localStorage.setItem('dna_cookie_consent', button.dataset.cookie);
+        setCookieConsent(button.dataset.cookie);
         cookieBanner.classList.remove('show');
+        window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({event:'cookie_consent_update',site_name:'DNA Cleaning Services',choice:button.dataset.cookie});
       });
     });

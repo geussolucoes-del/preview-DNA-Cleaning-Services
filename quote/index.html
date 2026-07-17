@@ -17,8 +17,19 @@
 <!-- Analytics / dataLayer hook -->
 <script>
 window.dataLayer = window.dataLayer || [];
-window.dnaCookieConsent = localStorage.getItem("dnaCookieConsent") || localStorage.getItem("dna_cookie_consent") || "";
+window.dnaGetStoredConsent = window.dnaGetStoredConsent || function(){
+  try { return localStorage.getItem("dnaCookieConsent") || localStorage.getItem("dna_cookie_consent") || ""; }
+  catch(e) { return ""; }
+};
+window.dnaSetStoredConsent = window.dnaSetStoredConsent || function(value){
+  try {
+    localStorage.setItem("dnaCookieConsent", value);
+    localStorage.setItem("dna_cookie_consent", value);
+  } catch(e) {}
+};
+window.dnaCookieConsent = window.dnaGetStoredConsent();
 window.dnaPushEvent = window.dnaPushEvent || function(eventName, payload){
+  window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(Object.assign({
     event: eventName,
     site_name: "DNA Cleaning Services",
@@ -202,7 +213,7 @@ img{display:block;max-width:100%;height:auto}
 <!-- TOP BAR -->
 <header class="qnav">
   <a href="/" aria-label="DNA Cleaning Services home">
-    <img src="./assets/dna-logo-transparent.png" alt="DNA Cleaning Services" class="qnav-logo"/>
+    <img src="/assets/dna-logo-transparent.png" alt="DNA Cleaning Services" class="qnav-logo"/>
   </a>
   <div class="qnav-right">
     <a class="qnav-back" href="/">
@@ -432,8 +443,7 @@ const cookieBanner=document.getElementById("cookieBanner");
 if(!window.dnaCookieConsent){cookieBanner.classList.add("show");}
 document.querySelectorAll("[data-cookie-choice]").forEach(btn=>btn.addEventListener("click",()=>{
   window.dnaCookieConsent=btn.dataset.cookieChoice;
-  localStorage.setItem("dnaCookieConsent",window.dnaCookieConsent);
-  localStorage.setItem("dna_cookie_consent",window.dnaCookieConsent);
+  window.dnaSetStoredConsent && window.dnaSetStoredConsent(window.dnaCookieConsent);
   cookieBanner.classList.remove("show");
   window.dnaPushEvent && window.dnaPushEvent("cookie_consent_update", { choice: window.dnaCookieConsent });
 }));
