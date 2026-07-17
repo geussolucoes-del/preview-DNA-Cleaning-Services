@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -113,12 +113,12 @@ img{display:block;max-width:100%;height:auto}
 .seg span{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 10px;border:1.5px solid var(--border);border-radius:11px;background:var(--bg-mist);font-family:var(--ff);font-size:.82rem;font-weight:500;transition:.18s;text-align:center}
 .seg input:checked + span{border-color:var(--green);background:var(--bg-soft);color:var(--green-d)}
 .seg input:focus-visible + span{box-shadow:0 0 0 4px rgba(31,111,178,.12)}
-.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.checks label{margin:0;position:relative}
-.checks input{position:absolute;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none}
-.checks span{display:flex;align-items:center;min-height:42px;padding:10px 12px;border:1.5px solid var(--border);border-radius:11px;background:var(--bg-mist);font-family:var(--ff);font-size:.78rem;font-weight:600;color:var(--ink);transition:.18s}
-.checks input:checked + span{border-color:var(--blue);background:var(--bg-soft);color:var(--blue-d)}
-.checks input:focus-visible + span{box-shadow:0 0 0 4px rgba(31,111,178,.12)}
+.addon-select-wrap{position:relative}
+.addon-select{min-height:128px;padding:10px 12px!important;line-height:1.45;overflow:auto;background:linear-gradient(180deg,#fff,var(--bg-mist))!important}
+.addon-select option{padding:9px 10px;border-radius:8px;margin:2px 0;font-family:var(--ff);font-size:.8rem;font-weight:600;color:var(--ink)}
+.addon-select option:checked{background:linear-gradient(115deg,var(--blue),var(--blue-d));color:#fff}
+.addon-hint{display:flex;justify-content:space-between;gap:10px;margin-top:7px;color:var(--muted2);font-size:.74rem}
+.addon-hint strong{color:var(--blue-d);font-weight:700}
 
 /* actions */
 .q-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:26px}
@@ -171,7 +171,7 @@ img{display:block;max-width:100%;height:auto}
   .q-progress{padding:20px 20px 0}
   .q-progress-lbl{padding:12px 20px 0}
   .q-actions{flex-wrap:wrap;gap:10px}
-  .checks{grid-template-columns:1fr}
+  .addon-select{min-height:116px}
   .q-spacer{display:none}
   .q-actions .btn-p{order:1;width:100%}
   .q-actions .btn-ghost{order:2;margin:2px auto 0}
@@ -297,22 +297,25 @@ img{display:block;max-width:100%;height:auto}
             </div>
             <div class="err-msg">Please let us know.</div></div>
         </div>
-        <div class="field"><label>Additional Services <span class="opt">(optional)</span></label>
-          <div class="checks" aria-label="Additional cleaning services">
-            <label><input type="checkbox" name="addons" value="Inside Oven Cleaning"/><span>Inside Oven Cleaning</span></label>
-            <label><input type="checkbox" name="addons" value="Inside Refrigerator Cleaning"/><span>Inside Refrigerator Cleaning</span></label>
-            <label><input type="checkbox" name="addons" value="Inside Cabinets & Drawers"/><span>Inside Cabinets &amp; Drawers</span></label>
-            <label><input type="checkbox" name="addons" value="Interior Windows"/><span>Interior Windows</span></label>
-            <label><input type="checkbox" name="addons" value="Glass Doors (Inside & Outside)"/><span>Glass Doors (Inside &amp; Outside)</span></label>
-            <label><input type="checkbox" name="addons" value="Window Tracks"/><span>Window Tracks</span></label>
-            <label><input type="checkbox" name="addons" value="Blinds Cleaning"/><span>Blinds Cleaning</span></label>
-            <label><input type="checkbox" name="addons" value="Baseboards (Detailed Cleaning)"/><span>Baseboards (Detailed Cleaning)</span></label>
-            <label><input type="checkbox" name="addons" value="Doors & Door Frames"/><span>Doors &amp; Door Frames</span></label>
-            <label><input type="checkbox" name="addons" value="Light Switches & Outlet Covers"/><span>Light Switches &amp; Outlet Covers</span></label>
-            <label><input type="checkbox" name="addons" value="Ceiling Fans"/><span>Ceiling Fans</span></label>
-            <label><input type="checkbox" name="addons" value="Patio / Lanai Cleaning"/><span>Patio / Lanai Cleaning</span></label>
-            <label><input type="checkbox" name="addons" value="Garage Sweeping"/><span>Garage Sweeping</span></label>
-            <label><input type="checkbox" name="addons" value="Bed Linen Change"/><span>Bed Linen Change</span></label>
+        <div class="field"><label for="addons">Additional Services <span class="opt">(optional)</span></label>
+          <div class="addon-select-wrap">
+            <select id="addons" class="addon-select" name="addons" multiple size="5" aria-describedby="addonsHint">
+              <option>Inside Oven Cleaning</option>
+              <option>Inside Refrigerator Cleaning</option>
+              <option>Inside Cabinets &amp; Drawers</option>
+              <option>Interior Windows</option>
+              <option>Glass Doors (Inside &amp; Outside)</option>
+              <option>Window Tracks</option>
+              <option>Blinds Cleaning</option>
+              <option>Baseboards (Detailed Cleaning)</option>
+              <option>Doors &amp; Door Frames</option>
+              <option>Light Switches &amp; Outlet Covers</option>
+              <option>Ceiling Fans</option>
+              <option>Patio / Lanai Cleaning</option>
+              <option>Garage Sweeping</option>
+              <option>Bed Linen Change</option>
+            </select>
+            <div class="addon-hint" id="addonsHint"><span>Optional add-ons</span><strong id="addonsCount">0 selected</strong></div>
           </div>
         </div>
       </div>
@@ -486,6 +489,14 @@ function validateStep(i){
 /* clear error as the user fixes a field */
 form.addEventListener("input", e=>{ const f=e.target.closest(".field"); if(f) f.classList.remove("bad"); });
 form.addEventListener("change", e=>{ if(e.target.name==="pets") document.getElementById("petsSeg").closest(".field").classList.remove("bad"); });
+const addonsSelect = document.getElementById("addons");
+const addonsCount = document.getElementById("addonsCount");
+function updateAddonsCount(){
+  const count = addonsSelect ? [...addonsSelect.selectedOptions].length : 0;
+  if(addonsCount) addonsCount.textContent = count === 1 ? "1 selected" : `${count} selected`;
+}
+addonsSelect?.addEventListener("change", updateAddonsCount);
+updateAddonsCount();
 
 /* phone formatting */
 document.getElementById("phone").addEventListener("input", e=>{
