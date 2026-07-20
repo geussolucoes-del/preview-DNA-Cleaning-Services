@@ -494,17 +494,21 @@
       box-shadow:0 16px 34px rgba(24,89,183,.25);
     }
     .before-after__handle::before{
-      content:"";
+      content:"< >";
       position:absolute;
       top:50%;
       left:50%;
       z-index:1;
-      width:17px;
-      height:17px;
-      transform:translate(-50%,-50%) rotate(45deg);
-      border-left:2px solid #fff;
-      border-bottom:2px solid #fff;
-      box-shadow:5px -5px 0 -3px #fff,7px -7px 0 -3px #fff;
+      width:34px;
+      height:18px;
+      transform:translate(-50%,-50%);
+      color:#fff;
+      font-family:"Sora",ui-sans-serif,system-ui,sans-serif;
+      font-size:1rem;
+      line-height:18px;
+      font-weight:900;
+      letter-spacing:0;
+      text-align:center;
     }
     .before-after:focus-visible{
       outline:3px solid rgba(118,210,231,.9);
