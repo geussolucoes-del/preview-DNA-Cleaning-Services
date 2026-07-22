@@ -429,9 +429,9 @@ img{display:block;max-width:100%;height:auto}
 <script>
 /* ===== EmailJS config - [CONFIGURAR]: replace with the client's real keys ===== */
 const EMAILJS_CONFIG = {
-  publicKey:  "YOUR_PUBLIC_KEY",   // [CONFIGURAR]
-  serviceId:  "YOUR_SERVICE_ID",   // [CONFIGURAR]
-  templateId: "YOUR_TEMPLATE_ID"   // [CONFIGURAR]
+  publicKey:  "FFOyRmnfPDEBOyG7I",
+  serviceId:  "service_sifzcgf",
+  templateId: "template_rlf8x5k"
 };
 // EmailJS only actually sends when real keys are set; otherwise the form still
 // completes for preview (no email is sent).
@@ -450,6 +450,7 @@ document.querySelectorAll("[data-cookie-choice]").forEach(btn=>btn.addEventListe
 
 /* fire on load: user opened the quote form */
 window.dnaPushEvent && window.dnaPushEvent("form_open", { page_path: location.pathname });
+if("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 /* ===== multi-step logic ===== */
 const form = document.getElementById("quoteForm");
@@ -460,6 +461,7 @@ const stepName = document.getElementById("stepName");
 const backBtn = document.getElementById("backBtn");
 const nextBtn = document.getElementById("nextBtn");
 const submitBtn = document.getElementById("submitBtn");
+const panel = document.querySelector(".q-panel");
 const names = ["Your details","Your space","Schedule & notes"];
 let current = 0;
 let step2Tracked = false;
@@ -468,7 +470,21 @@ let step2Tracked = false;
 const dEl = document.getElementById("startDate");
 dEl.min = new Date().toISOString().split("T")[0];
 
-function render(){
+function releaseActiveControl(){
+  const active = document.activeElement;
+  if(active && /^(INPUT|SELECT|TEXTAREA|BUTTON|SUMMARY)$/.test(active.tagName)){
+    active.blur();
+  }
+}
+
+function centerFormContent(target){
+  const destination = target || steps[current].querySelector(".q-step-title") || panel;
+  window.requestAnimationFrame(()=>{
+    destination.scrollIntoView({behavior:"smooth",block:"center",inline:"nearest"});
+  });
+}
+
+function render(options = {}){
   steps.forEach((s,i)=>s.classList.toggle("active", i===current));
   pbar.style.width = ((current+1)/steps.length*100) + "%";
   stepLabel.textContent = `Step ${current+1} of ${steps.length}`;
@@ -476,7 +492,8 @@ function render(){
   backBtn.hidden = current===0;
   nextBtn.hidden = current===steps.length-1;
   submitBtn.hidden = current!==steps.length-1;
-  form.querySelector(".q-step.active input,.q-step.active select")?.focus({preventScroll:true});
+  releaseActiveControl();
+  if(options.scroll) centerFormContent();
   if(current===1 && !step2Tracked){
     step2Tracked = true;
     window.dnaPushEvent && window.dnaPushEvent("form_step_2", { page_path: location.pathname });
@@ -538,11 +555,27 @@ document.getElementById("phone").addEventListener("input", e=>{
 });
 document.getElementById("zip").addEventListener("input", e=>{ e.target.value = e.target.value.replace(/\D/g,"").slice(0,5); });
 
-nextBtn.addEventListener("click", ()=>{ if(validateStep(current)){ current++; render(); window.scrollTo({top:0,behavior:"smooth"}); }});
-backBtn.addEventListener("click", ()=>{ current--; render(); });
+[nextBtn, backBtn, submitBtn].forEach(button=>{
+  button.addEventListener("pointerdown", releaseActiveControl, {passive:true});
+  button.addEventListener("touchstart", releaseActiveControl, {passive:true});
+});
+
+nextBtn.addEventListener("click", ()=>{
+  releaseActiveControl();
+  if(validateStep(current)){
+    current++;
+    render({scroll:true});
+  }
+});
+backBtn.addEventListener("click", ()=>{
+  releaseActiveControl();
+  current--;
+  render({scroll:true});
+});
 
 form.addEventListener("submit", e=>{
   e.preventDefault();
+  releaseActiveControl();
   if(!validateStep(current)) return;
   submitBtn.disabled = true; submitBtn.firstChild.textContent = "Sending... ";
 
@@ -565,8 +598,9 @@ form.addEventListener("submit", e=>{
     form.style.display = "none";
     document.querySelector(".q-progress").style.display="none";
     document.querySelector(".q-progress-lbl").style.display="none";
-    document.getElementById("success").classList.add("show");
-    window.scrollTo({top:0,behavior:"smooth"});
+    const success = document.getElementById("success");
+    success.classList.add("show");
+    centerFormContent(success);
   };
 
   if(EMAILJS_READY){
@@ -592,7 +626,10 @@ document.getElementById("qualifiedCallCta").addEventListener("click",()=>{
   });
 });
 
-render();
+render({scroll:false});
+window.addEventListener("load", ()=>{
+  if(!location.hash) centerFormContent(panel);
+}, {once:true});
 </script>
 </body>
 </html>
