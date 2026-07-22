@@ -157,6 +157,8 @@ img{display:block;max-width:100%;height:auto}
 .btn-ghost{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-family:var(--ff);font-size:.84rem;font-weight:600;padding:10px 6px;transition:color .2s}
 .btn-ghost:hover{color:var(--ink)}
 .btn-ghost[hidden]{display:none}
+.q-submit-error{display:none;margin-top:16px;padding:13px 15px;border:1px solid rgba(211,58,75,.28);border-radius:12px;background:#fff6f7;color:#9f2030;font-size:.84rem;font-weight:600;line-height:1.55}
+.q-submit-error.show{display:block}
 
 /* success */
 .q-success{display:none;padding:52px 34px;text-align:center;animation:qfade .4s var(--ease)}
@@ -396,6 +398,9 @@ img{display:block;max-width:100%;height:auto}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
         </button>
       </div>
+      <div class="q-submit-error" id="submitError" role="alert" aria-live="polite">
+        Something went wrong sending your request. Please try again in a moment or call/text (425) 599-9562.
+      </div>
     </form>
 
     <!-- SUCCESS -->
@@ -461,6 +466,7 @@ const stepName = document.getElementById("stepName");
 const backBtn = document.getElementById("backBtn");
 const nextBtn = document.getElementById("nextBtn");
 const submitBtn = document.getElementById("submitBtn");
+const submitError = document.getElementById("submitError");
 const panel = document.querySelector(".q-panel");
 const names = ["Your details","Your space","Schedule & notes"];
 let current = 0;
@@ -501,6 +507,13 @@ function render(options = {}){
 }
 
 function markBad(field, bad){ field.classList.toggle("bad", bad); }
+
+function setSubmitError(show, message){
+  if(!submitError) return;
+  if(message) submitError.textContent = message;
+  submitError.classList.toggle("show", show);
+  if(show) centerFormContent(submitError);
+}
 
 function validateStep(i){
   let ok = true, firstBad = null;
@@ -577,13 +590,40 @@ form.addEventListener("submit", e=>{
   e.preventDefault();
   releaseActiveControl();
   if(!validateStep(current)) return;
+  setSubmitError(false);
   submitBtn.disabled = true; submitBtn.firstChild.textContent = "Sending... ";
 
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
-  data.addons = formData.getAll("addons").join(", ");
+  data.addons = formData.getAll("addons").join(", ") || "None selected";
+  data.notes = (data.notes || "").trim() || "No additional notes.";
   data.page_path = location.pathname;
   data.submitted_at = new Date().toISOString();
+  data.first_name = data.firstName || "";
+  data.last_name = data.lastName || "";
+  data.from_name = `${data.firstName || ""} ${data.lastName || ""}`.trim();
+  data.name = data.from_name;
+  data.customer_name = data.from_name;
+  data.customer_email = data.email || "";
+  data.phone_number = data.phone || "";
+  data.customer_phone = data.phone || "";
+  data.reply_to = data.email || "";
+  data.to_email = "dnacleaning23@gmail.com";
+  data.contact_pref = data.contactPref || "";
+  data.zip_code = data.zip || "";
+  data.service_type = data.service || "";
+  data.pref_date = data.startDate || "";
+  data.hear_about = data.hearAbout || "";
+  data.message = [
+    `New quote request from ${data.from_name || "website lead"}.`,
+    `Service: ${data.service || "Not provided"}.`,
+    `Frequency: ${data.frequency || "Not provided"}.`,
+    `Phone: ${data.phone || "Not provided"}.`,
+    `Email: ${data.email || "Not provided"}.`,
+    `ZIP: ${data.zip || "Not provided"}.`,
+    `Add-ons: ${data.addons}.`,
+    `Notes: ${data.notes}`
+  ].join("\n");
   const finish = ()=>{
     window.dnaPushEvent && window.dnaPushEvent("form_submit", {
       service: data.service || "",
@@ -606,7 +646,17 @@ form.addEventListener("submit", e=>{
   if(EMAILJS_READY){
     emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, data)
       .then(finish)
-      .catch(()=>{ submitBtn.disabled=false; submitBtn.firstChild.textContent="Request My Free Quote "; alert("Something went wrong sending your request. Please try again in a moment."); });
+      .catch((error)=>{
+        console.error("DNA EmailJS send failed", error);
+        window.dnaPushEvent && window.dnaPushEvent("form_submit_error", {
+          page_path: location.pathname,
+          error_status: error && error.status ? String(error.status) : "",
+          error_text: error && error.text ? String(error.text).slice(0,180) : ""
+        });
+        submitBtn.disabled=false;
+        submitBtn.firstChild.textContent="Request My Free Quote ";
+        setSubmitError(true, "Something went wrong sending your request. Please try again in a moment or call/text (425) 599-9562.");
+      });
   } else {
     // preview mode (placeholder keys): complete without sending
     setTimeout(finish, 500);
